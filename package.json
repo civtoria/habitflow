@@ -1,0 +1,36 @@
+{
+  "name": "faculdade_vic",
+  "version": "1.0.0",
+  "description": "HabitFlow com frontend e backend Node + MySQL",
+  "main": "backend/src/server.js",
+  "scripts": {
+    "start": "node backend/src/server.js",
+    "dev": "concurrently \"nodemon backend/src/server.js\" \"nodemon --watch *.js --watch *.html --watch *.css --exec echo 'Frontend arquivos atualizados'\"",
+    "backend": "nodemon backend/src/server.js",
+    "test": "echo \"Sem testes automatizados ainda\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CaioAP2001/Faculdade_VIC.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/CaioAP2001/Faculdade_VIC/issues"
+  },
+  "homepage": "https://github.com/CaioAP2001/Faculdade_VIC#readme",
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "mysql2": "^3.22.3"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1",
+    "nodemon": "^3.1.14"
+  }
+}

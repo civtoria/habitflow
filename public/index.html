@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HabitFlow</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="app" id="app">
+  <!-- Header Global com Tema e Logout -->
+  <div class="header-global">
+    <div class="header-controls">
+      <button class="btn-icon" id="theme-toggle" title="Alternar tema" onclick="toggleTheme()">
+        🌙
+      </button>
+      <button class="btn-icon" title="Sair" onclick="logout()">
+        🚪
+      </button>
+    </div>
+  </div>
+ 
+  <!-- Bubbles decorativas (reposicionadas por JS por tela) -->
+  <div class="bubbles" id="bubbles">
+    <div class="bubble" style="width:180px;height:180px;top:-60px;right:-50px;"></div>
+    <div class="bubble" style="width:120px;height:120px;top:80px;left:-40px;opacity:0.4;"></div>
+    <div class="bubble" style="width:80px;height:80px;top:160px;right:40px;opacity:0.3;"></div>
+  </div>
+ 
+  <!-- TELA 1: Dashboard -->
+  <div class="screen active" id="screen-dashboard">
+    <div class="header">
+      <h1>Meus hábitos</h1>
+      <p id="dash-date"></p>
+    </div>
+    <div class="content">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-num" id="stat-total">0</div>
+          <div class="stat-label">Total de hábitos</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num" id="stat-done">0</div>
+          <div class="stat-label">Concluídos hoje</div>
+        </div>
+      </div>
+ 
+      <div style="margin-bottom:14px;">
+        <button class="btn-primary" onclick="goTo('screen-criar')">+ Adicionar hábito</button>
+      </div>
+ 
+      <div class="section-title">Hábitos de hoje</div>
+      <div class="filter-row" id="filter-row">
+        <div class="filter-pill active" data-cat="Todos" onclick="setFilter(this)">Todos</div>
+      </div>
+      <div id="habits-list"></div>
+    </div>
+    <nav class="nav">
+      <button class="nav-btn active" onclick="goTo('screen-dashboard')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        Início
+      </button>
+      <button class="nav-btn" onclick="goTo('screen-lista')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+        Lista
+      </button>
+      <button class="nav-btn" onclick="goTo('screen-criar')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+        Criar
+      </button>
+      <button class="nav-btn" onclick="goTo('screen-ranking')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        Ranking
+      </button>
+    </nav>
+  </div>
+ 
+  <!-- TELA 2: Criar/Editar hábito -->
+  <div class="screen" id="screen-criar">
+    <div class="header">
+      <h1 id="form-title">Criar hábito</h1>
+      <p>Preencha os campos abaixo</p>
+    </div>
+    <div class="content">
+      <div class="form-group">
+        <label class="form-label">Nome do hábito *</label>
+        <input class="form-input" id="input-nome" type="text" placeholder="Ex: Beber 2L de água" maxlength="50">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Categoria *</label>
+        <select class="form-select" id="input-cat">
+          <option value="">Selecione...</option>
+          <option value="Saúde">💧 Saúde</option>
+          <option value="Educação">📚 Educação</option>
+          <option value="Esporte">🏃 Esporte</option>
+          <option value="Finanças">💰 Finanças</option>
+          <option value="Bem-estar">🧘 Bem-estar</option>
+          <option value="Alimentação">🥗 Alimentação</option>
+          <option value="Social">🤝 Social</option>
+          <option value="Criatividade">🎨 Criatividade</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Frequência *</label>
+        <select class="form-select" id="input-freq">
+          <option value="">Selecione...</option>
+          <option value="Diário">Diário</option>
+          <option value="Semanal">Semanal</option>
+          <option value="Mensal">Mensal</option>
+        </select>
+      </div>
+      <div style="display:flex;gap:10px;margin-top:8px;">
+        <button class="btn-outline" onclick="cancelForm()">Cancelar</button>
+        <button class="btn-primary" onclick="salvarHabito()">Salvar hábito</button>
+      </div>
+    </div>
+    <nav class="nav">
+      <button class="nav-btn" onclick="goTo('screen-dashboard')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        Início
+      </button>
+      <button class="nav-btn" onclick="goTo('screen-lista')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+        Lista
+      </button>
+      <button class="nav-btn active" onclick="goTo('screen-criar')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+        Criar
+      </button>
+      <button class="nav-btn" onclick="goTo('screen-ranking')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        Ranking
+      </button>
+    </nav>
+  </div>
+ 
+  <!-- TELA 3: Lista completa -->
+  <div class="screen" id="screen-lista">
+    <div class="header">
+      <h1>Todos os hábitos</h1>
+      <p id="lista-count">0 hábitos cadastrados</p>
+    </div>
+    <div class="content">
+      <div class="filter-row" id="filter-row-lista">
+        <div class="filter-pill active" data-cat="Todos" onclick="setFilterLista(this)">Todos</div>
+      </div>
+      <div id="lista-list"></div>
+    </div>
+    <nav class="nav">
+      <button class="nav-btn" onclick="goTo('screen-dashboard')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        Início
+      </button>
+      <button class="nav-btn active" onclick="goTo('screen-lista')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+        Lista
+      </button>
+      <button class="nav-btn" onclick="goTo('screen-criar')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+        Criar
+      </button>
+      <button class="nav-btn" onclick="goTo('screen-ranking')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        Ranking
+      </button>
+    </nav>
+  </div>
+ 
+  <!-- TELA 4: Ranking -->
+  <div class="screen" id="screen-ranking">
+    <div class="header">
+      <h1>Ranking mensal</h1>
+      <p id="rank-month"></p>
+    </div>
+    <div class="content">
+      <div class="prize-banner">
+        <h3>🎁 Prêmios de abril 2026</h3>
+        <p>🥇 1º lugar — Vale-presente R$ 100<br>🥈 2º lugar — 1 mês de assinatura premium<br>🥉 3º lugar — Kit de bem-estar</p>
+      </div>
+      <div class="section-title">Top usuários do mês</div>
+      <div id="ranking-list"></div>
+    </div>
+    <nav class="nav">
+      <button class="nav-btn" onclick="goTo('screen-dashboard')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        Início
+      </button>
+      <button class="nav-btn" onclick="goTo('screen-lista')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+        Lista
+      </button>
+      <button class="nav-btn" onclick="goTo('screen-criar')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+        Criar
+      </button>
+      <button class="nav-btn active" onclick="goTo('screen-ranking')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        Ranking
+      </button>
+    </nav>
+  </div>
+ 
+  <!-- Modal de confirmação de exclusão -->
+  <div class="modal-overlay" id="modal-excluir">
+    <div class="modal">
+      <h2>Excluir hábito?</h2>
+      <p style="color:#666;font-size:15px;">Essa ação não pode ser desfeita. O hábito será removido permanentemente.</p>
+      <div class="modal-actions">
+        <button class="btn-outline" style="color:#666;border-color:#ddd;" onclick="fecharModal()">Cancelar</button>
+        <button class="btn-primary" style="background:#E24B4A;" onclick="confirmarExcluir()">Excluir</button>
+      </div>
+    </div>
+  </div>
+ 
+  <div class="toast" id="toast"></div>
+</div>
+ <script src="js/script.js"></script>
+</body>
+</html>

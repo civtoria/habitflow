@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Registro</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="bubble b1"></div>
+  <div class="bubble b2"></div>
+  <div class="bubble b3"></div>
+  <div class="bubble b4"></div>
+
+  <div class="bubble-card">
+    <div class="login-title">Criar Conta</div>
+
+    <div class="field-wrap">
+      <label class="field-label">Nome completo</label>
+      <input class="bubble-input" id="nome" type="text" placeholder="seu nome" />
+    </div>
+
+    <div class="field-wrap">
+      <label class="field-label">E-mail</label>
+      <input class="bubble-input" id="email" type="email" placeholder="seu@email.com" />
+    </div>
+
+    <div class="field-wrap">
+      <label class="field-label">Login</label>
+      <input class="bubble-input" id="login" type="text" placeholder="escolha um usuário" />
+    </div>
+
+    <div class="field-wrap">
+      <label class="field-label">Senha</label>
+      <input class="bubble-input" id="senha" type="password" placeholder="••••••••" />
+    </div>
+
+    <div class="field-wrap">
+      <label class="field-label">Confirmar senha</label>
+      <input class="bubble-input" id="confirma" type="password" placeholder="••••••••" />
+    </div>
+
+    <button class="btn-register" onclick="registrar()">Criar conta</button>
+    <div class="msg" id="msg"></div>
+    <div class="login-link">Já tem conta? <span onclick="window.location.href='login.html'">Fazer login</span></div>
+  </div>
+
+  <script src="script.js"></script>
+
+</body>
+</html>

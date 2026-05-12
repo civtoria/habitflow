@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="bubble b1"></div>
+  <div class="bubble b2"></div>
+  <div class="bubble b3"></div>
+  <div class="bubble b4"></div>
+
+  <div class="bubble-card">
+    <div class="login-title">Login</div>
+
+    <div class="field-wrap">
+      <label class="field-label">Login</label>
+      <input class="bubble-input" id="login-usuario" type="text" placeholder="seu usuário" />
+    </div>
+
+    <div class="field-wrap">
+      <label class="field-label">Senha</label>
+      <input class="bubble-input" id="login-senha" type="password" placeholder="••••••••" />
+    </div>
+
+    <button class="btn-login" onclick="loginUsuario()">Entrar</button>
+    <div class="msg" id="msg"></div>
+    <div class="login-link">Ainda não tem conta? <span onclick="window.location.href='registro.html'">Criar conta</span></div>
+  </div>
+
+  <script src="script.js"></script>
+
+</body>
+</html>
